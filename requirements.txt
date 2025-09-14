@@ -3,7 +3,7 @@ flask-cors==6.0.1
 tensorflow-cpu==2.20.0
 huggingface-hub>=0.21.4
 pillow
-numpy==1.26.4
+numpy>=2.1.1
 gunicorn
 setuptools
 wheel
