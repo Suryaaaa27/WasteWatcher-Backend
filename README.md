@@ -85,7 +85,7 @@ This system is designed for campus deployments (Kalinga University) but is scala
 **⚙️ Installation**
 
 # Clone repository
-git clone https://github.com/your-username/wastewatchers.git
+git clone https://github.com/Suryaaaa27/wastewatchers.git
 cd wastewatchers
 
 # Backend Setup
