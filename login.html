@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WasteWatchers - Login</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #fceabb, #f8b500);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-card {
+      width: 350px;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      padding: 40px 30px;
+      text-align: center;
+    }
+
+    .logo {
+      width: 70px;
+      height: 70px;
+      background: #fceabb;
+      border-radius: 15px;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #333;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .input-group {
+      margin: 15px 0;
+      text-align: left;
+    }
+
+    .input-group label {
+      font-size: 0.9rem;
+      color: #555;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-bottom: 2px solid #ccc;
+      outline: none;
+      font-size: 1rem;
+    }
+
+    .input-group input:focus {
+      border-color: #f8b500;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 25px;
+      margin: 12px 0;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-login {
+      background: #f8b500;
+      color: #fff;
+    }
+
+    .btn-login:hover {
+      background: #e0a000;
+    }
+
+    .btn-create {
+      background: #fff;
+      border: 2px solid #f8b500;
+      color: #f8b500;
+    }
+
+    .btn-create:hover {
+      background: #fceabb;
+    }
+
+    .links {
+      font-size: 0.85rem;
+      color: #555;
+      margin-top: 10px;
+    }
+
+    .links a {
+      color: #f8b500;
+      text-decoration: none;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <div class="logo">WW</div>
+    <h2>Welcome!</h2>
+
+    <form action="home.html">
+      <div class="input-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+
+      <button type="submit" class="btn btn-login">Log in</button>
+    </form>
+
+    <button class="btn btn-create" onclick="window.location.href='signup.html'">Create Account</button>
+
+    <div class="links">
+      <a href="#">Forgot Password?</a><br>
+      Don’t have an account? <a href="signup.html">Sign up</a>
+    </div>
+  </div>
+</body>
+</html>

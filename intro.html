@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>WasteWatchers — Snap · Scan · Save the Ozone</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    /* ensure modal is hidden by default */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .modal-content {
+      background: #fff;
+      border-radius: 20px;
+      padding: 40px 30px;
+      width: 350px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      text-align: center;
+      position: relative;
+    }
+
+    .close-btn {
+      position: absolute;
+      right: 15px;
+      top: 10px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+    }
+
+    /* piggy popup */
+    .welcome-popup {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 200;
+    }
+    .welcome-content {
+      background: #fff;
+      border-radius: 20px;
+      padding: 30px;
+      text-align: center;
+      max-width: 400px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+    .welcome-content img {
+      max-width: 100%;
+      border-radius: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Background video -->
+  <video id="bgVideo" class="bg-video" autoplay muted loop playsinline poster="poster.jpg">
+    <source src="intro-bg.webm" type="video/webm">
+    <source src="intro-bg.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Overlay content -->
+  <div class="overlay">
+    <div class="topbar">
+      <a href="camera.html" class="topbtn">Snap Waste</a>
+      <div class="topitem">Save Ozone</div>
+      <a href="learn.html" class="topbtn">Earn Eco-Points</a>
+      <div class="topitem">Build a Greener Future</div>
+    </div>
+
+    <div class="hero">
+      <div class="smallheading">An AI Initiative for World Ozone Day 2025</div>
+      <h1 class="title">WasteWatchers</h1>
+      <p class="subtitle">Turn everyday waste into awareness, action, and rewards — for you and the planet.</p>
+      <div class="cta-row">
+        <a class="cta" id="enterBtn" href="#">Start Your Journey ♻</a>
+        <a class="ghost" href="about.html">Learn the Science</a>
+      </div>
+    </div>
+
+    <a href="home.html" class="sr-only">Skip intro and open site</a>
+  </div>
+
+  <!-- Login Popup Modal -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <div class="logo"><img src="logo.jpg" alt="Logo" style="width:50px;border-radius:12px;"></div>
+      <h2>Welcome!</h2>
+
+      <form id="loginForm">
+        <div class="input-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" required>
+        </div>
+
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" required>
+        </div>
+
+        <button type="submit" class="btn btn-login">Log in</button>
+      </form>
+
+      <button class="btn btn-create">Create Account</button>
+
+      <div class="links">
+        <a href="#">Forgot Password?</a><br>
+        Don’t have an account? <a href="#">Sign up</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Welcome Piggy Popup -->
+  <div id="welcomePopup" class="welcome-popup">
+    <div class="welcome-content">
+      <img src="piggy.jpg" alt="Welcome Image">
+      
+    </div>
+  </div>
+
+  <script>
+    const enterBtn = document.getElementById("enterBtn");
+    const loginModal = document.getElementById("loginModal");
+    const closeBtn = document.querySelector(".close-btn");
+    const loginForm = document.getElementById("loginForm");
+    const welcomePopup = document.getElementById("welcomePopup");
+
+    // Show login modal when Start Journey is clicked
+    enterBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      loginModal.style.display = "flex";
+    });
+
+    // Close login modal
+    closeBtn.addEventListener("click", () => {
+      loginModal.style.display = "none";
+    });
+
+    // Handle login submit
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      loginModal.style.display = "none";
+      welcomePopup.style.display = "flex";
+
+      // After 3 sec redirect
+      setTimeout(() => {
+        window.location.href = "camera.html";
+      }, 3000);
+    });
+  </script>
+</body>
+</html>

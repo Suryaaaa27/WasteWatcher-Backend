@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learn & Earn - EcoGames</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #1a202c 0%, #2d3748 25%, #065f46 100%);
+      color: white;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Animated Background Particles */
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .particle-1 {
+      top: 10%;
+      left: 10%;
+      width: 6px;
+      height: 6px;
+      background: #10b981;
+      animation: float 6s ease-in-out infinite;
+      opacity: 0.3;
+    }
+
+    .particle-2 {
+      top: 20%;
+      right: 15%;
+      width: 4px;
+      height: 4px;
+      background: #34d399;
+      animation: float 4s ease-in-out infinite reverse;
+      opacity: 0.4;
+    }
+
+    .particle-3 {
+      bottom: 30%;
+      left: 20%;
+      width: 8px;
+      height: 8px;
+      background: #6ee7b7;
+      animation: float 5s ease-in-out infinite;
+      opacity: 0.2;
+    }
+
+    .particle-4 {
+      bottom: 15%;
+      right: 25%;
+      width: 5px;
+      height: 5px;
+      background: #10b981;
+      animation: float 7s ease-in-out infinite reverse;
+      opacity: 0.3;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      33% {
+        transform: translateY(-20px) rotate(120deg);
+      }
+      66% {
+        transform: translateY(10px) rotate(240deg);
+      }
+    }
+
+    /* Header */
+    header {
+      position: relative;
+      z-index: 10;
+      padding: 24px;
+      background: linear-gradient(90deg, #059669 0%, #047857 100%);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      text-align: center;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .header-icon {
+      font-size: 2.5rem;
+      animation: bounce 2s infinite;
+    }
+
+    .header-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #ffffff 0%, #d1fae5 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 0.025em;
+    }
+
+    .header-subtitle {
+      font-size: 1.2rem;
+      color: #d1fae5;
+      font-weight: 500;
+      margin-top: 8px;
+    }
+
+    /* Main Container */
+    .container {
+      position: relative;
+      z-index: 10;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    /* Section Titles */
+    .section-title {
+      text-align: center;
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 16px;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #d1d5db;
+      margin-bottom: 48px;
+      font-weight: 500;
+    }
+
+    /* Waste Categories Grid */
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-bottom: 64px;
+    }
+
+    .category-card {
+      background: linear-gradient(135deg, rgba(55, 65, 81, 0.9) 0%, rgba(31, 41, 55, 0.9) 100%);
+      backdrop-filter: blur(16px);
+      border-radius: 20px;
+      padding: 32px;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .category-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.25);
+      border-color: rgba(16, 185, 129, 0.4);
+    }
+
+    .category-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #10b981, #34d399, #6ee7b7);
+      border-radius: 20px 20px 0 0;
+    }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .category-icon {
+      font-size: 3rem;
+      animation: bounce 3s infinite;
+    }
+
+    .category-name {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .category-info {
+      space-y: 16px;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding: 12px;
+      background: rgba(16, 185, 129, 0.1);
+      border-radius: 12px;
+      border-left: 4px solid #10b981;
+    }
+
+    .info-icon {
+      font-size: 1.2rem;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .info-content {
+      flex: 1;
+    }
+
+    .info-label {
+      font-weight: 600;
+      color: #10b981;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .info-value {
+      font-weight: 700;
+      color: #ffffff;
+      font-size: 1.1rem;
+    }
+
+    /* Kabadiwala Section */
+    .kabadiwala-section {
+      background: linear-gradient(135deg, rgba(55, 65, 81, 0.9) 0%, rgba(31, 41, 55, 0.9) 100%);
+      backdrop-filter: blur(16px);
+      border-radius: 24px;
+      padding: 40px;
+      margin-bottom: 48px;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kabadiwala-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #2563eb, #3b82f6, #60a5fa);
+      border-radius: 24px 24px 0 0;
+    }
+
+    .contacts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 32px;
+    }
+
+    .contact-card {
+      background: rgba(37, 99, 235, 0.1);
+      border: 1px solid rgba(37, 99, 235, 0.3);
+      border-radius: 16px;
+      padding: 24px;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 35px rgba(37, 99, 235, 0.2);
+      border-color: rgba(37, 99, 235, 0.5);
+    }
+
+    .contact-icon {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+      animation: pulse 2s infinite;
+    }
+
+    .contact-name {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .contact-phone {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #60a5fa;
+      margin-bottom: 8px;
+    }
+
+    .contact-area {
+      font-size: 0.9rem;
+      color: #d1d5db;
+      font-weight: 500;
+    }
+
+    /* Back Button */
+    .back-section {
+      text-align: center;
+      margin-top: 48px;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 36px;
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      border: none;
+      border-radius: 50px;
+      color: white;
+      font-size: 1.2rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(5, 150, 105, 0.3);
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(5, 150, 105, 0.4);
+      background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+    }
+
+    .back-btn:active {
+      transform: translateY(-1px);
+    }
+
+    .back-icon {
+      width: 20px;
+      height: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .back-btn:hover .back-icon {
+      transform: translateX(-4px);
+    }
+
+    /* Glow effect */
+    .back-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .back-btn:hover::before {
+      left: 100%;
+    }
+
+    /* Animations */
+    @keyframes bounce {
+      0%, 20%, 53%, 80%, 100% {
+        transform: translate3d(0, 0, 0);
+      }
+      40%, 43% {
+        transform: translate3d(0, -8px, 0);
+      }
+      70% {
+        transform: translate3d(0, -4px, 0);
+      }
+      90% {
+        transform: translate3d(0, -2px, 0);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header-title {
+        font-size: 2rem;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+      }
+
+      .categories-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .category-card {
+        padding: 24px;
+      }
+
+      .category-name {
+        font-size: 1.5rem;
+      }
+
+      .contacts-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .container {
+        padding: 24px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated Background Particles -->
+  <div class="particle particle-1"></div>
+  <div class="particle particle-2"></div>
+  <div class="particle particle-3"></div>
+  <div class="particle particle-4"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <div class="header-icon">🌱</div>
+      <div>
+        <h1 class="header-title">Learn & Earn EcoPoints</h1>
+        <p class="header-subtitle">Turn your waste into wealth with smart disposal!</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="container">
+    <!-- Waste Categories Section -->
+    <section>
+      <h2 class="section-title">💰 Waste Categories & Earnings</h2>
+      <p class="section-subtitle">Learn how to dispose different types of waste and earn money + EcoPoints!</p>
+      
+      <div class="categories-grid">
+        <!-- Plastic Card -->
+        <div class="category-card">
+          <div class="category-header">
+            <div class="category-icon">♻️</div>
+            <h3 class="category-name">Plastic</h3>
+          </div>
+          <div class="category-info">
+            <div class="info-item">
+              <div class="info-icon">🏪</div>
+              <div class="info-content">
+                <div class="info-label">Where to Dispose</div>
+                <div class="info-value">Recycling Centers, Kabadiwala</div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon">💵</div>
+              <div class="info-content">
+                <div class="info-label">Money Earned</div>
+                <div class="info-value">₹8-15 per kg</div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon">⭐</div>
+              <div class="info-content">
+                <div class="info-label">EcoPoints</div>
+                <div class="info-value">20 points per kg</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metal Card -->
+        <div class="category-card">
+          <div class="category-header">
+            <div class="category-icon">🔧</div>
+            <h3 class="category-name">Metal</h3>
+          </div>
+          <div class="category-info">
+            <div class="info-item">
+              <div class="info-icon">🏪</div>
+              <div class="info-content">
+                <div class="info-label">Where to Dispose</div>
+                <div class="info-value">Scrap Dealers, Kabadiwala</div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon">💵</div>
+              <div class="info-content">
+                <div class="info-label">Money Earned</div>
+                <div class="info-value">₹25-40 per kg</div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon">⭐</div>
+              <div class="info-content">
+                <div class="info-label">EcoPoints</div>
+                <div class="info-value">35 points per kg</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Glass Card -->
+        <div class="category-card">
+          <div class="category-header">
+            <div class="category-icon">🍾</div>
+            <h3 class="category-name">Glass</h3>
+          </div>
+          <div class="category-info">
+            <div class="info-item">
+              <div class="info-icon">🏪</div>
+              <div class="info-content">
+                <div class="info-label">Where to Dispose</div>
+                <div class="info-value">Glass Recyclers, Kabadiwala</div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon">💵</div>
+              <div class="info-content">
+                <div class="info-label">Money Earned</div>
+                <div class="info-value">₹3-6 per kg</div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon">⭐</div>
+              <div class="info-content">
+                <div class="info-label">EcoPoints</div>
+                <div class="info-value">15 points per kg</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Organic Card -->
+        <div class="category-card">
+          <div class="category-header">
+            <div class="category-icon">🌱</div>
+            <h3 class="category-name">Organic</h3>
+          </div>
+          <div class="category-info">
+            <div class="info-item">
+              <div class="info-icon">🏪</div>
+              <div class="info-content">
+                <div class="info-label">Where to Dispose</div>
+                <div class="info-value">Composting, Home Garden</div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon">💵</div>
+              <div class="info-content">
+                <div class="info-label">Money Earned</div>
+                <div class="info-value">₹2-5 per kg (compost)</div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon">⭐</div>
+              <div class="info-content">
+                <div class="info-label">EcoPoints</div>
+                <div class="info-value">25 points per kg</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- E-Waste Card -->
+        <div class="category-card">
+          <div class="category-header">
+            <div class="category-icon">📱</div>
+            <h3 class="category-name">E-Waste</h3>
+          </div>
+          <div class="category-info">
+            <div class="info-item">
+              <div class="info-icon">🏪</div>
+              <div class="info-content">
+                <div class="info-label">Where to Dispose</div>
+                <div class="info-value">E-Waste Centers, Authorized Dealers</div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon">💵</div>
+              <div class="info-content">
+                <div class="info-label">Money Earned</div>
+                <div class="info-value">₹50-200 per kg</div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon">⭐</div>
+              <div class="info-content">
+                <div class="info-label">EcoPoints</div>
+                <div class="info-value">50 points per kg</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Kabadiwala Contact Section -->
+    <section class="kabadiwala-section">
+      <h2 class="section-title">📞 Kabadiwala Contacts</h2>
+      <p class="section-subtitle">Connect with local waste collectors in your area</p>
+      
+      <div class="contacts-grid">
+        <div class="contact-card">
+          <div class="contact-icon">📞</div>
+          <div class="contact-name">Rajesh Kumar</div>
+          <div class="contact-phone">+91 98765 43210</div>
+          <div class="contact-area">Sector 27, Naya Raipur</div>
+        </div>
+        
+        <div class="contact-card">
+          <div class="contact-icon">📞</div>
+          <div class="contact-name">Suresh Recyclers</div>
+          <div class="contact-phone">+91 87654 32109</div>
+          <div class="contact-area">Telibandha, Raipur</div>
+        </div>
+        
+        <div class="contact-card">
+          <div class="contact-icon">📞</div>
+          <div class="contact-name">Green Waste Co.</div>
+          <div class="contact-phone">+91 76543 21098</div>
+          <div class="contact-area">Panchpedi Naka, Raipur</div>
+        </div>
+        
+        <div class="contact-card">
+          <div class="contact-icon">📞</div>
+          <div class="contact-name">EcoCollect Services</div>
+          <div class="contact-phone">+91 65432 10987</div>
+          <div class="contact-area">Tatibandh, Raipur</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Back Button -->
+    <div class="back-section">
+      <button class="back-btn" onclick="goBackToGames()">
+        <svg class="back-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5"></path>
+          <path d="M12 19l-7-7 7-7"></path>
+        </svg>
+        <span>Back to EcoGames</span>
+        <div>🎮</div>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    function goBackToGames() {
+      window.location.href = 'games.html';
+    }
+
+    // Add some interactive effects
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add stagger animation to cards
+      const cards = document.querySelectorAll('.category-card');
+      cards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        
+        setTimeout(() => {
+          card.style.transition = 'all 0.6s ease';
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }, index * 100);
+      });
+
+      // Add stagger animation to contact cards
+      const contactCards = document.querySelectorAll('.contact-card');
+      contactCards.forEach((card, index) => {
+        card.style.animationDelay = `${(index + cards.length) * 0.1}s`;
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        
+        setTimeout(() => {
+          card.style.transition = 'all 0.6s ease';
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }, (index + cards.length) * 100);
+      });
+    });
+  </script>
+</body>
+</html>

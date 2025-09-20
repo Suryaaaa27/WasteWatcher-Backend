@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beautiful Dark Themed Waste Sorting Game</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #1a202c 0%, #2d3748 25%, #065f46 100%);
+      color: white;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Animated Background Particles */
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .particle-1 {
+      top: 80px;
+      left: 40px;
+      width: 8px;
+      height: 8px;
+      background: #10b981;
+      animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+      opacity: 0.2;
+    }
+
+    .particle-2 {
+      top: 160px;
+      right: 80px;
+      width: 4px;
+      height: 4px;
+      background: #34d399;
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      opacity: 0.3;
+    }
+
+    .particle-3 {
+      bottom: 128px;
+      left: 25%;
+      width: 6px;
+      height: 6px;
+      background: #6ee7b7;
+      animation: bounce 1s infinite;
+      opacity: 0.25;
+    }
+
+    .particle-4 {
+      bottom: 80px;
+      right: 33%;
+      width: 4px;
+      height: 4px;
+      background: #10b981;
+      animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+      opacity: 0.2;
+    }
+
+    @keyframes ping {
+      75%, 100% {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: .5;
+      }
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(-25%);
+        animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+      }
+      50% {
+        transform: translateY(0);
+        animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+      }
+    }
+
+    @keyframes spin-slow {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    /* Header */
+    header {
+      position: relative;
+      z-index: 10;
+      padding: 24px;
+      background: linear-gradient(90deg, #059669 0%, #047857 100%);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .header-icon {
+      width: 32px;
+      height: 32px;
+      animation: spin-slow 3s linear infinite;
+    }
+
+    .header-title {
+      font-size: 1.875rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #ffffff 0%, #d1fae5 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 0.025em;
+    }
+
+    /* Dashboard Button */
+    .dashboard-btn {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background: linear-gradient(90deg, #2563eb 0%, #1d4ed8 100%);
+      border-radius: 9999px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .dashboard-btn:hover {
+      background: linear-gradient(90deg, #1d4ed8 0%, #1e40af 100%);
+      transform: scale(1.05);
+      box-shadow: 0 25px 50px -12px rgba(37, 99, 235, 0.25);
+    }
+
+    .dashboard-icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Game Container */
+    .game-container {
+      position: relative;
+      z-index: 10;
+      max-width: 1536px;
+      margin: 0 auto;
+      padding: 24px;
+      margin-top: 32px;
+    }
+
+    /* Game Title */
+    .game-title-section {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .title-icons {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .sparkle-icon {
+      width: 32px;
+      height: 32px;
+      color: #10b981;
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    .game-title {
+      font-size: 2.25rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .game-subtitle {
+      font-size: 1.25rem;
+      color: #d1d5db;
+      font-weight: 500;
+    }
+
+    /* Bins */
+    .bins-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 32px;
+      margin-bottom: 48px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .bin {
+      position: relative;
+      height: 256px;
+      background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+      border: 2px dashed #6b7280;
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .bin:hover {
+      border-color: #10b981;
+      transform: scale(1.05);
+      box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.1);
+    }
+
+    .bin.drag-over {
+      border-color: #10b981;
+      background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+      box-shadow: 0 0 0 1px #10b981, 0 25px 50px -12px rgba(16, 185, 129, 0.25);
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    .bin.dropped {
+      border-color: #10b981;
+      background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+      box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.25);
+    }
+
+    .bin-emoji {
+      font-size: 4rem;
+      margin-bottom: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .bin:hover .bin-emoji {
+      transform: scale(1.1);
+    }
+
+    .bin.dropped .bin-emoji {
+      animation: bounce 1s infinite;
+    }
+
+    .bin-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      text-align: center;
+      background: linear-gradient(90deg, #e5e7eb 0%, #ffffff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Items */
+    .items-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .item {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
+      border-radius: 12px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      cursor: grab;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    .item:hover {
+      transform: scale(1.1) rotate(6deg);
+      box-shadow: 0 25px 50px -12px rgba(255, 255, 255, 0.2);
+    }
+
+    .item:active {
+      cursor: grabbing;
+      transform: scale(1.25);
+    }
+
+    .item.completed {
+      opacity: 0.3;
+      cursor: not-allowed;
+      filter: grayscale(1);
+    }
+
+    .item.completed span {
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    .item.dragging {
+      opacity: 0.5;
+      transform: rotate(5deg) scale(1.1);
+    }
+
+    /* Score Board */
+    .score-section {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .score-board {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      background: linear-gradient(135deg, rgba(55, 65, 81, 0.8) 0%, rgba(31, 41, 55, 0.8) 100%);
+      backdrop-filter: blur(16px);
+      border-radius: 16px;
+      padding: 16px 32px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      border: 1px solid #374151;
+    }
+
+    .score-text {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #10b981;
+    }
+
+    .score-number {
+      font-size: 1.875rem;
+    }
+
+    .score-divider {
+      width: 1px;
+      height: 32px;
+      background: #6b7280;
+    }
+
+    .progress-dots {
+      display: flex;
+      gap: 4px;
+    }
+
+    .progress-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #6b7280;
+      transition: all 0.3s ease;
+    }
+
+    .progress-dot.completed {
+      background: #10b981;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    /* Next Level Button */
+    .next-level-section {
+      text-align: center;
+    }
+
+    .next-level-btn {
+      display: none;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 32px;
+      background: linear-gradient(90deg, #059669 0%, #047857 100%);
+      border: none;
+      border-radius: 9999px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      animation: bounce 1s infinite;
+    }
+
+    .next-level-btn:hover {
+      background: linear-gradient(90deg, #047857 0%, #065f46 100%);
+      transform: scale(1.05);
+      box-shadow: 0 25px 50px -12px rgba(5, 150, 105, 0.25);
+    }
+
+    .next-level-btn.show {
+      display: inline-flex;
+    }
+
+    .arrow-icon {
+      width: 24px;
+      height: 24px;
+      transition: transform 0.3s ease;
+    }
+
+    .next-level-btn:hover .arrow-icon {
+      transform: translateX(4px);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header-title {
+        font-size: 1.5rem;
+      }
+
+      .game-title {
+        font-size: 1.875rem;
+      }
+
+      .bins-container {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .bin {
+        height: 200px;
+      }
+
+      .bin-emoji {
+        font-size: 3rem;
+      }
+
+      .items-container {
+        gap: 16px;
+      }
+
+      .item {
+        width: 70px;
+        height: 70px;
+        font-size: 1.75rem;
+      }
+
+      .dashboard-btn {
+        top: 16px;
+        right: 16px;
+        padding: 10px 14px;
+      }
+    }
+     /* Earn More Points Button Section */
+.earn-points-section {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Anchor styled as button */
+.earn-points-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: 40px;
+  background: linear-gradient(135deg, #38a169, #2f855a);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none; /* remove underline */
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.earn-points-btn:hover {
+  background: linear-gradient(135deg, #2f855a, #276749);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+}
+
+.earn-points-btn .btn-icon {
+  font-size: 1.2rem;
+}
+
+.earn-points-btn .arrow-icon {
+  width: 20px;
+  height: 20px;
+}
+
+    /* Success Animation */
+    @keyframes celebration {
+      0% { transform: scale(1) rotate(0deg); }
+      25% { transform: scale(1.1) rotate(5deg); }
+      50% { transform: scale(1.2) rotate(-5deg); }
+      75% { transform: scale(1.1) rotate(5deg); }
+      100% { transform: scale(1) rotate(0deg); }
+    }
+
+    .celebration {
+      animation: celebration 0.6s ease-in-out;
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated Background Particles -->
+  <div class="particle particle-1"></div>
+  <div class="particle particle-2"></div>
+  <div class="particle particle-3"></div>
+  <div class="particle particle-4"></div>
+
+  <!-- Header -->
+  <header>
+    <svg class="header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M3 6h18l-2 13H5L3 6z"></path>
+      <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+      <path d="M10 11V9"></path>
+      <path d="M14 11V9"></path>
+    </svg>
+    <h1 class="header-title">Waste is Wealth — EcoGames</h1>
+  </header>
+
+  <!-- Dashboard Button -->
+<button class="dashboard-btn" onclick="window.location.href='dashboard.html'">
+  <svg class="dashboard-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+    <path d="M9 9h6v6H9z"></path>
+  </svg>
+  <span>Dashboard</span>
+</button>
+
+
+  <!-- Game Container -->
+  <div class="game-container">
+    <!-- Game Title -->
+    <div class="game-title-section">
+      <div class="title-icons">
+        <svg class="sparkle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 3l1.912 5.813a2 2 0 001.275 1.275L21 12l-5.813 1.912a2 2 0 00-1.275 1.275L12 21l-1.912-5.813a2 2 0 00-1.275-1.275L3 12l5.813-1.912a2 2 0 001.275-1.275L12 3z"></path>
+        </svg>
+        <h2 class="game-title">Level 1: Sorting Challenge</h2>
+        <svg class="sparkle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 3l1.912 5.813a2 2 0 001.275 1.275L21 12l-5.813 1.912a2 2 0 00-1.275 1.275L12 21l-1.912-5.813a2 2 0 00-1.275-1.275L3 12l5.813-1.912a2 2 0 001.275-1.275L12 3z"></path>
+        </svg>
+      </div>
+      <p class="game-subtitle">Dispose waste, unlock levels, and earn eco-points!</p>
+    </div>
+
+    <!-- Bins -->
+    <div class="bins-container">
+      <div class="bin" data-type="Plastic">
+        <div class="bin-emoji">♻️</div>
+        <h3 class="bin-name">Plastic Bin</h3>
+      </div>
+      <div class="bin" data-type="Organic">
+        <div class="bin-emoji">🌱</div>
+        <h3 class="bin-name">Organic Bin</h3>
+      </div>
+      <div class="bin" data-type="Metal">
+        <div class="bin-emoji">🔧</div>
+        <h3 class="bin-name">Metal Bin</h3>
+      </div>
+    </div>
+
+    <!-- Items -->
+    <div class="items-container">
+      <div class="item" draggable="true" data-type="Plastic" data-id="1">
+        <span>🍼</span>
+      </div>
+      <div class="item" draggable="true" data-type="Organic" data-id="2">
+        <span>🍌</span>
+      </div>
+      <div class="item" draggable="true" data-type="Metal" data-id="3">
+        <span>🥫</span>
+      </div>
+      <div class="item" draggable="true" data-type="Plastic" data-id="4">
+        <span>🛍️</span>
+      </div>
+      <div class="item" draggable="true" data-type="Organic" data-id="5">
+        <span>🍎</span>
+      </div>
+    </div>
+
+    <!-- Score Board -->
+    <div class="score-section">
+      <div class="score-board">
+        <div class="score-text">
+          Score: <span class="score-number" id="score">0</span> / <span id="total">5</span>
+        </div>
+        <div class="score-divider"></div>
+        <div class="progress-dots" id="progressDots">
+          <div class="progress-dot"></div>
+          <div class="progress-dot"></div>
+          <div class="progress-dot"></div>
+          <div class="progress-dot"></div>
+          <div class="progress-dot"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Earn More Points Button -->
+<div class="earn-points-section">
+  <a href="learn.html" class="earn-points-btn">
+    <span class="btn-icon">💰</span>
+    <span>Want to earn more points?</span>
+    <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M5 12h14"></path>
+      <path d="M12 5l7 7-7 7"></path>
+    </svg>
+  </a>
+</div>
+
+
+    <!-- Next Level Button -->
+    <div class="next-level-section">
+      <button class="next-level-btn" id="nextLevelBtn" onclick="goToNextLevel()">
+        <span>Next Level</span>
+        <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14"></path>
+          <path d="M12 5l7 7-7 7"></path>
+        </svg>
+        <div>🚀</div>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    let score = 0;
+    let draggedItem = null;
+    let completedItems = [];
+    const totalItems = 5;
+
+    const items = document.querySelectorAll('.item');
+    const bins = document.querySelectorAll('.bin');
+    const scoreEl = document.getElementById('score');
+    const nextLevelBtn = document.getElementById('nextLevelBtn');
+    const progressDots = document.querySelectorAll('.progress-dot');
+
+    // Initialize drag and drop
+    items.forEach(item => {
+      item.addEventListener('dragstart', handleDragStart);
+      item.addEventListener('dragend', handleDragEnd);
+    });
+
+    bins.forEach(bin => {
+      bin.addEventListener('dragover', handleDragOver);
+      bin.addEventListener('dragenter', handleDragEnter);
+      bin.addEventListener('dragleave', handleDragLeave);
+      bin.addEventListener('drop', handleDrop);
+    });
+
+    function handleDragStart(e) {
+      if (completedItems.includes(e.target.dataset.id)) {
+        e.preventDefault();
+        return;
+      }
+      
+      draggedItem = e.target;
+      e.target.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/html', e.target.outerHTML);
+    }
+
+    function handleDragEnd(e) {
+      e.target.classList.remove('dragging');
+      draggedItem = null;
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+    }
+
+    function handleDragEnter(e) {
+      e.preventDefault();
+      if (draggedItem && draggedItem.dataset.type === e.currentTarget.dataset.type) {
+        e.currentTarget.classList.add('drag-over');
+      }
+    }
+
+    function handleDragLeave(e) {
+      e.currentTarget.classList.remove('drag-over');
+    }
+
+    function handleDrop(e) {
+      e.preventDefault();
+      e.currentTarget.classList.remove('drag-over');
+      
+      if (!draggedItem) return;
+      
+      const binType = e.currentTarget.dataset.type;
+      const itemType = draggedItem.dataset.type;
+      const itemId = draggedItem.dataset.id;
+      
+      if (itemType === binType && !completedItems.includes(itemId)) {
+        // Correct drop
+        score++;
+        completedItems.push(itemId);
+        
+        // Update score display
+        scoreEl.textContent = score;
+        
+        // Update progress dots
+        if (progressDots[score - 1]) {
+          progressDots[score - 1].classList.add('completed');
+        }
+        
+        // Mark item as completed
+        draggedItem.classList.add('completed');
+        draggedItem.draggable = false;
+        
+        // Animate bin
+        e.currentTarget.classList.add('dropped');
+        e.currentTarget.classList.add('celebration');
+        
+        setTimeout(() => {
+          e.currentTarget.classList.remove('dropped', 'celebration');
+        }, 1500);
+        
+        // Check if game is complete
+        if (score === totalItems) {
+          setTimeout(() => {
+            nextLevelBtn.classList.add('show');
+            
+            // Save progress
+            localStorage.setItem('level1Completed', 'true');
+            const currentPoints = parseInt(localStorage.getItem('ecoPoints') || '0');
+            localStorage.setItem('ecoPoints', (currentPoints + 50).toString());
+            
+            // Show celebration
+            setTimeout(() => {
+              alert('🎉 Congratulations! You earned 50 EcoPoints!');
+            }, 1000);
+          }, 500);
+        }
+      } else {
+        // Wrong drop - shake animation
+        e.currentTarget.style.animation = 'shake 0.5s ease-in-out';
+        setTimeout(() => {
+          e.currentTarget.style.animation = '';
+        }, 500);
+        alert('❌ Wrong bin! Try again.');
+      }
+    }
+
+    function goToNextLevel() {
+      alert('🚀 Next level coming soon!');
+      // In a real app, this would navigate to the next level
+      // window.location.href = 'level2.html';
+    }
+
+    function goToDashboard() {
+      alert('📊 Dashboard navigation coming soon!');
+      // In a real app, this would navigate to the dashboard
+      // window.location.href = 'dashboard.html';
+    }
+
+    // Add some interactive effects
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add floating animation to items
+      items.forEach((item, index) => {
+        item.style.animationDelay = `${index * 0.1}s`;
+        item.style.animation = 'float 3s ease-in-out infinite';
+      });
+    });
+  </script>
+</body>
+</html>
